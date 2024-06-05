@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 
@@ -57,36 +59,134 @@ func main() {
 	*/
 
 	//fields of Structure
-	gohan := &Saiyan{
-		Person: &Person{"gohan"},
-		Power:  1000,
-		Father: &Saiyan{
+	/*
+		gohan := &Saiyan{
 			Person: &Person{"gohan"},
-			Power:  9001,
-			Father: nil,
-		},
-	}
+			Power:  1000,
+			Father: &Saiyan{
+				Person: &Person{"gohan"},
+				Power:  9001,
+				Father: nil,
+			},
+		}
 
-	gohan.Introduce()
+		gohan.Introduce()
 
-	goku := &Saiyan{
-		Person: &Person{"Goku"},
-	}
+		goku := &Saiyan{
+			Person: &Person{"Goku"},
+		}
 
-	fmt.Println(goku.Name)
-	fmt.Println(goku.Person.Name)
+		fmt.Println(goku.Name)
+		fmt.Println(goku.Person.Name)
+	*/
 
+	//Maps, Arrays and Slices
+
+	//Arrays
+	/*
+		var scores [10]int
+		scores[0] = 339
+		fmt.Println(len(scores))
+		for index, value := range scores {
+			fmt.Println(index + value)
+		}*/
+
+	//Slice
+	//scores := []int{1, 4, 293, 4, 9} first way
+	//scores := make([]int, 10) or
+
+	/*
+		scores := make([]int, 0, 10)
+		//scores = append(scores, 5)
+		scores = scores[0:8]
+		scores[7] = 524552
+		fmt.Println(scores)
+	*/
+
+	//4 way to create a slice
+	//names:= []string{"Minou", "Leto"}
+	//cheks:=make([]bool, 10)
+	//var names[]string
+	//scores := make([]int, 0, 20)
+
+	//Examples
+	/*
+		func extarctPowers(Saiyan []*Saiyan) []int {
+			powers:= make([]int, len(saiyans))
+			for index, saiyan := range saiyans{
+				powers[index]=saiyan.Power
+			}
+			return powers
+		}
+	*/
+
+	/*
+		func extractPowers(saiyans []*Saiyan) []int {
+		powers := make([]int, 0, len(saiyans))
+		for _, saiyan := range saiyans {
+		powers = append(powers, saiyan.Power)
+		}
+		return powers
+		}
+	*/
+	/*
+		scores := []int{1, 2, 3, 4, 5}
+		scores = removeAtIndex(scores, 2)
+		fmt.Println(scores) // [1 2 5 4]
+	*/
+
+	//the copy built in function
+	/*
+		scores := make([]int, 100)
+		for i := 0; i < 100; i++ {
+			scores[i] = int(rand.Int31n(1000))
+		}
+		sort.Ints(scores)
+		worst := make([]int, 5)
+		copy(worst[2:4], scores[:9])
+		fmt.Println(worst)
+	*/
+
+	//Maps
+	lookup := make(map[string]int)
+	lookup["goku"] = 9001
+	power, exists := lookup["vegeta"]
+	fmt.Println(power, exists)
+
+	//total:= len(lookup)
+	//delete(lookup, "goku")
+	//lookup:= make(map[string]int, 100)
+	//goku.Friends["Krillin"]= ...//to load or create Krillin
+
+}
+
+// won't preserve order
+func removeAtIndex(source []int, index int) []int {
+	lastIndex := len(source) - 1
+	//swap the last value and the value we want to remove
+	source[index], source[lastIndex] = source[lastIndex], source[index]
+	return source[:lastIndex]
 }
 
 //Structs
 
-//Composition or trait
+type Saiyan2 struct {
+	Name    string
+	Friends map[string]*Saiyan
+}
+
+// Composition or trait
 type Person struct {
 	Name string
 }
 
 func (p *Person) Introduce() {
 	fmt.Printf("Hi, I'm %s\n", p.Name)
+}
+
+// ==>overwriting this func for Saiyan
+func (s *Saiyan) Introduce() {
+	fmt.Printf("Hi, I'm %s\n", s.Name)
 }
 
 type Saiyan struct {
